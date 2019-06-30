@@ -19,12 +19,8 @@ export default function* gameSaga() {
         isStarted: state.game.isStarted,
         timeInterval: state.game.timeInterval
       }})
-      
-      let isEnded = yield select(state => { return {
-        isEnded: state.game.isEnded
-      }})
 
-      while (current.isStarted && !isEnded.isEnded) {
+      while (current.isStarted) {
         yield call(delay, current.timeInterval)
         yield put({ type: TARGET_UPDATED })
         const data = yield select(state => { return {
@@ -40,9 +36,10 @@ export default function* gameSaga() {
         
         yield put({ type: TARGET_CREATED, spawn: scoreToNbSpawn(data.score) })
 
-        isEnded = yield select(state => { return {
-          isEnded: state.game.isEnded
+        const newCurrent = yield select(state => { return {
+          isStarted: state.game.isStarted
         }})
+        current.isStarted = newCurrent.isStarted
       }
     }
 }

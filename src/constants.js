@@ -3,6 +3,7 @@ export const GAME_START_REQUESTED = 'GAME_START_REQUESTED'
 export const GAME_START = 'GAME_START'
 export const GAME_INCREMENT = 'GAME_INCREMENT'
 export const GAME_PENALITY = 'GAME_PENALITY'
+export const GAME_STOP = 'GAME_STOP'
 export const TIME_INTERVAL = 1000
 
 // Targets

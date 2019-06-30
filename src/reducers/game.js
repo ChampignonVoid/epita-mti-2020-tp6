@@ -1,4 +1,4 @@
-import { GAME_START, GAME_INCREMENT, GAME_START_REQUESTED, TIME_INTERVAL, GAME_PENALITY } from "../constants";
+import { GAME_START, GAME_INCREMENT, GAME_START_REQUESTED, TIME_INTERVAL, GAME_PENALITY, GAME_STOP } from "../constants";
 
 const comboToMultiplier = 3
 
@@ -6,8 +6,7 @@ const defaultState = {
   lives: 3,
   score: 0,
   isStarted: false,
-  combo: 0,
-  isEnded: false
+  combo: 0
 };
 
 const game = (state = defaultState, action) => {
@@ -32,12 +31,17 @@ const game = (state = defaultState, action) => {
       }
     case GAME_PENALITY:
       const lives = state.lives - action.count < 0 ? 0 : state.lives - action.count
-      const isEnded = lives === 0
+      const isStarted = lives > 0
       return {
         ...state,
         lives,
         combo: 0,
-        isEnded
+        isStarted
+      }
+    case GAME_STOP:
+      return {
+        ...state,
+        isStarted: false
       }
     default:
       return state;

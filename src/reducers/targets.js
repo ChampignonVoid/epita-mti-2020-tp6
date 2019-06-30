@@ -24,7 +24,6 @@ const target = (target, action) => {
   switch (action.type) {
     case TARGET_UPDATED:
       const color = getColorFromValue(target.value - 1)
-      console.log(color)
       return {
         ...target,
         value: target.value - 1,
