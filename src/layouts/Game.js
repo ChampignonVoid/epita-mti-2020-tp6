@@ -11,10 +11,11 @@ const mapStateToProps = state => ({
   lives: state.game.lives,
   score: state.game.score,
   isStarted: state.game.isStarted,
+  isEnded: state.game.isEnded,
   targets: state.targets.targets
 });
 
-const GameLayout = ({ isStarted, lives, score, targets, dispatch }) => (
+const GameLayout = ({ isStarted, lives, score, targets, isEnded, dispatch }) => (
   <div
     style={{
       position: 'fixed',
@@ -28,7 +29,7 @@ const GameLayout = ({ isStarted, lives, score, targets, dispatch }) => (
       margin: 'auto'
     }}
   >
-    {isStarted ? (
+    {isStarted && !isEnded ? (
       <React.Fragment>
         <Info lives={lives} score={score} />
         {targets.map((target) =>
@@ -39,9 +40,16 @@ const GameLayout = ({ isStarted, lives, score, targets, dispatch }) => (
                     onClick={() => dispatch({ type: TARGET_CLICKED, id: target.id })}/>
         )}
       </React.Fragment>
-    ) : (
-      <ButtonStart onClick={() => dispatch({ type: GAME_START_REQUESTED })} />
-    )}
+    ) : isEnded ? (
+        <ButtonStart onClick={() => dispatch({ type: GAME_START_REQUESTED,
+                                              timeInterval: parseInt(document.getElementById('inputTime').value) })}
+                     score={score}
+        />
+      ) : (
+        <ButtonStart onClick={() => dispatch({ type: GAME_START_REQUESTED,
+                                               timeInterval: parseInt(document.getElementById('inputTime').value) })}
+        />
+      )}
   </div>
 );
 

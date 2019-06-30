@@ -1,4 +1,4 @@
-import { TARGET_CLICKED, TARGET_UPDATED, TARGET_CREATED } from "../constants";
+import { TARGET_CLICKED, TARGET_UPDATED, TARGET_CREATED, TARGET_DELETED, TARGET_CLEARED } from "../constants";
 
 let id = 0
 
@@ -7,8 +7,8 @@ const defaultState = {
 }
 
 const createTarget = () => {
-  const x = Math.floor(Math.random() * 90)
-  const y = Math.floor(Math.random() * 90)
+  const x = Math.floor(Math.random() * 80)
+  const y = Math.floor(Math.random() * 80)
   return { id: ++id, x, y, value: 5 }
 }
 
@@ -43,6 +43,16 @@ const targets = (state = defaultState, action) => {
       return {
         ...state,
         targets: targets
+      }
+    case TARGET_DELETED:
+      return {
+        ...state,
+        targets: state.targets.filter(t => !action.targets.includes(t.id))
+      }
+    case TARGET_CLEARED:
+      return {
+        ...state,
+        targets: [ createTarget() ]
       }
     default:
       return state;
