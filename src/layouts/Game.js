@@ -37,6 +37,7 @@ const GameLayout = ({ isStarted, lives, score, targets, isEnded, dispatch }) => 
                     x={target.x}
                     y={target.y}
                     value={target.value}
+                    bgColor={target.bgColor}
                     onClick={() => dispatch({ type: TARGET_CLICKED, id: target.id })}/>
         )}
       </React.Fragment>
